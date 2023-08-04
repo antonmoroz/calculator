@@ -5,8 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="Calculator" Height="400" Width="350" ResizeMode="NoResize" Icon="Resources/Icon.ico">
+    <Window.Resources>
+        <Style x:Key="MainGrid" TargetType="Grid">
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <Style x:Key="StandardButton" TargetType="Button">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <Style x:Key="NonDigitButton" TargetType="Button" BasedOn="{StaticResource StandardButton}">
+            <Setter Property="Background" Value="CornflowerBlue"/>
+        </Style>
+        <Style x:Key="EqualsButton" TargetType="Button" BasedOn="{StaticResource StandardButton}">
+            <Setter Property="Background" Value="Orange"/>
+        </Style>
+        <Style x:Key="StandardTextBox" TargetType="TextBox">
+            <Setter Property="Margin" Value="2 0 2 8"/>
+            <Setter Property="FlowDirection" Value="RightToLeft"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="FontSize" Value="30"/>
+        </Style>
+    </Window.Resources>
+    <Grid Style="{StaticResource MainGrid}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.ColumnSpan="5" Style="{StaticResource StandardTextBox}"></TextBox>
+        <Button Grid.Row="1" Grid.Column="0" Content="MC" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="1" Grid.Column="1" Content="MR" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="1" Grid.Column="2" Content="MS" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="1" Grid.Column="3" Content="M+" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="1" Grid.Column="4" Content="M-" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="2" Grid.Column="0" Content="&#x232b;" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="2" Grid.Column="1" Content="C" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="2" Grid.Column="2" Content="CE" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="2" Grid.Column="3" Content="&#x00b1;" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="2" Grid.Column="4" Content="&#x221a;" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="3" Grid.Column="0" Content="7" Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="3" Grid.Column="1" Content="8" Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="3" Grid.Column="2" Content="9" Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="3" Grid.Column="3" Content="/" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="3" Grid.Column="4" Content="%" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="4" Grid.Column="0" Content="4" Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="4" Grid.Column="1" Content="5" Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="4" Grid.Column="2" Content="6" Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="4" Grid.Column="3" Content="x" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="4" Grid.Column="4" Content="1/x" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="5" Grid.Column="0" Content="1" Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="5" Grid.Column="1" Content="2" Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="5" Grid.Column="2" Content="3" Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="5" Grid.Column="3" Content="-" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="5" Grid.Column="4" Grid.RowSpan="2" Content="=" Style="{StaticResource EqualsButton}"/>
+        <Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Content="0" Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="6" Grid.Column="2" Content="." Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="6" Grid.Column="3" Content="+" Style="{StaticResource NonDigitButton}"/>
     </Grid>
 </Window>
