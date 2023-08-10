@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="Calculator" Height="400" Width="350" ResizeMode="NoResize" Icon="Resources/Icon.ico">
+        Title="Calculator" Height="400" Width="350" ResizeMode="NoResize" Icon="../Resources/Icon.ico">
     <Window.Resources>
         <Style x:Key="MainGrid" TargetType="Grid">
             <Setter Property="Margin" Value="10"/>
