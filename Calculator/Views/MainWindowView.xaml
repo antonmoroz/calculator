@@ -3,9 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Calculator"
+        xmlns:viewmodels="clr-namespace:Calculator.ViewModels"
         mc:Ignorable="d"
         Title="Calculator" Height="400" Width="350" ResizeMode="NoResize" Icon="../Resources/Icon.ico">
+    <Window.DataContext>
+        <viewmodels:MainWindowViewModel/>
+    </Window.DataContext>
     <Window.Resources>
         <Style x:Key="MainGrid" TargetType="Grid">
             <Setter Property="Margin" Value="10"/>
@@ -13,6 +16,7 @@
         <Style x:Key="StandardButton" TargetType="Button">
             <Setter Property="Margin" Value="2"/>
             <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Focusable" Value="False"/>
         </Style>
         <Style x:Key="NonDigitButton" TargetType="Button" BasedOn="{StaticResource StandardButton}">
             <Setter Property="Background" Value="CornflowerBlue"/>
@@ -22,11 +26,31 @@
         </Style>
         <Style x:Key="StandardTextBox" TargetType="TextBox">
             <Setter Property="Margin" Value="2 0 2 8"/>
-            <Setter Property="FlowDirection" Value="RightToLeft"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="FontSize" Value="30"/>
         </Style>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="D0" Command="{Binding InsertDigitOrDotCommand}" CommandParameter="0"/>
+        <KeyBinding Key="D1" Command="{Binding InsertDigitOrDotCommand}" CommandParameter="1"/>
+        <KeyBinding Key="D2" Command="{Binding InsertDigitOrDotCommand}" CommandParameter="2"/>
+        <KeyBinding Key="D3" Command="{Binding InsertDigitOrDotCommand}" CommandParameter="3"/>
+        <KeyBinding Key="D4" Command="{Binding InsertDigitOrDotCommand}" CommandParameter="4"/>
+        <KeyBinding Key="D5" Command="{Binding InsertDigitOrDotCommand}" CommandParameter="5"/>
+        <KeyBinding Key="D6" Command="{Binding InsertDigitOrDotCommand}" CommandParameter="6"/>
+        <KeyBinding Key="D7" Command="{Binding InsertDigitOrDotCommand}" CommandParameter="7"/>
+        <KeyBinding Key="D8" Command="{Binding InsertDigitOrDotCommand}" CommandParameter="8"/>
+        <KeyBinding Key="D9" Command="{Binding InsertDigitOrDotCommand}" CommandParameter="9"/>
+        <KeyBinding Key="OemPeriod" Command="{Binding InsertDigitOrDotCommand}" CommandParameter="."/>
+        <KeyBinding Key="Backspace" Command="{Binding BackspaceOperationCommand}"/>
+        <KeyBinding Key="Add" Command="{Binding AddOperationCommand}"/>
+        <KeyBinding Key="Subtract" Command="{Binding SubtractOperationCommand}"/>
+        <KeyBinding Key="Multiply" Command="{Binding MultiplyOperationCommand}"/>
+        <KeyBinding Key="Divide" Command="{Binding DivideOperationCommand}"/>
+        <KeyBinding Key="OemPlus" Command="{Binding EqualsOperationCommand}"/>
+        <KeyBinding Key="Enter" Command="{Binding EqualsOperationCommand}"/>
+    </Window.InputBindings>
     <Grid Style="{StaticResource MainGrid}">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -44,34 +68,90 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBox Grid.ColumnSpan="5" Style="{StaticResource StandardTextBox}"></TextBox>
-        <Button Grid.Row="1" Grid.Column="0" Content="MC" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="1" Grid.Column="1" Content="MR" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="1" Grid.Column="2" Content="MS" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="1" Grid.Column="3" Content="M+" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="1" Grid.Column="4" Content="M-" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="2" Grid.Column="0" Content="&#x232b;" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="2" Grid.Column="1" Content="C" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="2" Grid.Column="2" Content="CE" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="2" Grid.Column="3" Content="&#x00b1;" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="2" Grid.Column="4" Content="&#x221a;" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="3" Grid.Column="0" Content="7" Style="{StaticResource StandardButton}"/>
-        <Button Grid.Row="3" Grid.Column="1" Content="8" Style="{StaticResource StandardButton}"/>
-        <Button Grid.Row="3" Grid.Column="2" Content="9" Style="{StaticResource StandardButton}"/>
-        <Button Grid.Row="3" Grid.Column="3" Content="/" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="3" Grid.Column="4" Content="%" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="4" Grid.Column="0" Content="4" Style="{StaticResource StandardButton}"/>
-        <Button Grid.Row="4" Grid.Column="1" Content="5" Style="{StaticResource StandardButton}"/>
-        <Button Grid.Row="4" Grid.Column="2" Content="6" Style="{StaticResource StandardButton}"/>
-        <Button Grid.Row="4" Grid.Column="3" Content="x" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="4" Grid.Column="4" Content="1/x" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="5" Grid.Column="0" Content="1" Style="{StaticResource StandardButton}"/>
-        <Button Grid.Row="5" Grid.Column="1" Content="2" Style="{StaticResource StandardButton}"/>
-        <Button Grid.Row="5" Grid.Column="2" Content="3" Style="{StaticResource StandardButton}"/>
-        <Button Grid.Row="5" Grid.Column="3" Content="-" Style="{StaticResource NonDigitButton}"/>
-        <Button Grid.Row="5" Grid.Column="4" Grid.RowSpan="2" Content="=" Style="{StaticResource EqualsButton}"/>
-        <Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Content="0" Style="{StaticResource StandardButton}"/>
-        <Button Grid.Row="6" Grid.Column="2" Content="." Style="{StaticResource StandardButton}"/>
-        <Button Grid.Row="6" Grid.Column="3" Content="+" Style="{StaticResource NonDigitButton}"/>
+        <TextBox Grid.ColumnSpan="5" Text="{Binding DisplayedNumberAsString}"  Style="{StaticResource StandardTextBox}"></TextBox>
+        <Button Grid.Row="1" Grid.Column="0"
+                Command="{Binding MemoryClearOperationCommand}"
+                Content="MC" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="1" Grid.Column="1"
+                Command="{Binding MemoryRecallOperationCommand}"
+                Content="MR" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="1" Grid.Column="2"
+                Command="{Binding MemoryStoreOperationCommand}"
+                Content="MS" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="1" Grid.Column="3"
+                Command="{Binding MemoryPlusOperationCommand}"
+                Content="M+" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="1" Grid.Column="4"
+                Command="{Binding MemoryMinusOperationCommand}"
+                Content="M-" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="2" Grid.Column="0"
+                Command="{Binding BackspaceOperationCommand}"
+                Content="&#x232b;" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="2" Grid.Column="1"
+                Command="{Binding ClearOperationCommand}"
+                Content="C" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="2" Grid.Column="2"
+                Command="{Binding ClearEntryOperationCommand}"
+                Content="CE" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="2" Grid.Column="3"
+                Command="{Binding ChangeSignOperationCommand}"
+                Content="&#x00b1;" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="2" Grid.Column="4"
+                Command="{Binding SquareRootOperationCommand}"
+                Content="&#x221a;" Style="{StaticResource NonDigitButton}"/>
+        <Button x:Name="Digit7Button" Grid.Row="3" Grid.Column="0"
+                Command="{Binding InsertDigitOrDotCommand}" CommandParameter="{Binding ElementName=Digit7Button, Path=Content}"
+                Content="7" Style="{StaticResource StandardButton}"/>
+        <Button x:Name="Digit8Button" Grid.Row="3" Grid.Column="1"
+                Command="{Binding InsertDigitOrDotCommand}" CommandParameter="{Binding ElementName=Digit8Button, Path=Content}"
+                Content="8" Style="{StaticResource StandardButton}"/>
+        <Button x:Name="Digit9Button" Grid.Row="3" Grid.Column="2"
+                Command="{Binding InsertDigitOrDotCommand}" CommandParameter="{Binding ElementName=Digit9Button, Path=Content}"
+                Content="9" Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="3" Grid.Column="3"
+                Command="{Binding DivideOperationCommand}"
+                Content="/" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="3" Grid.Column="4"
+                Command="{Binding PercentOperationCommand}"
+                Content="%" Style="{StaticResource NonDigitButton}"/>
+        <Button x:Name="Digit4Button" Grid.Row="4" Grid.Column="0"
+                Command="{Binding InsertDigitOrDotCommand}" CommandParameter="{Binding ElementName=Digit4Button, Path=Content}"
+                Content="4" Style="{StaticResource StandardButton}"/>
+        <Button x:Name="Digit5Button" Grid.Row="4" Grid.Column="1"
+                Command="{Binding InsertDigitOrDotCommand}" CommandParameter="{Binding ElementName=Digit5Button, Path=Content}"
+                Content="5" Style="{StaticResource StandardButton}"/>
+        <Button x:Name="Digit6Button" Grid.Row="4" Grid.Column="2"
+                Command="{Binding InsertDigitOrDotCommand}" CommandParameter="{Binding ElementName=Digit6Button, Path=Content}"
+                Content="6" Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="4" Grid.Column="3"
+                Command="{Binding MultiplyOperationCommand}"
+                Content="x" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="4" Grid.Column="4"
+                Command="{Binding InverseOperationCommand}"
+                Content="1/x" Style="{StaticResource NonDigitButton}"/>
+        <Button x:Name="Digit1Button" Grid.Row="5" Grid.Column="0"
+                Command="{Binding InsertDigitOrDotCommand}" CommandParameter="{Binding ElementName=Digit1Button, Path=Content}"
+                Content='1' Style="{StaticResource StandardButton}"/>
+        <Button x:Name="Digit2Button" Grid.Row="5" Grid.Column="1"
+                Command="{Binding InsertDigitOrDotCommand}" CommandParameter="{Binding ElementName=Digit2Button, Path=Content}"
+                Content="2" Style="{StaticResource StandardButton}"/>
+        <Button x:Name="Digit3Button" Grid.Row="5" Grid.Column="2"
+                Command="{Binding InsertDigitOrDotCommand}" CommandParameter="{Binding ElementName=Digit3Button, Path=Content}"
+                Content="3" Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="5" Grid.Column="3"
+                Command="{Binding SubtractOperationCommand}"
+                Content="-" Style="{StaticResource NonDigitButton}"/>
+        <Button Grid.Row="5" Grid.Column="4" Grid.RowSpan="2"
+                Command="{Binding EqualsOperationCommand}"
+                Content="=" Style="{StaticResource EqualsButton}"/>
+        <Button x:Name="Digit0Button" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
+                Command="{Binding InsertDigitOrDotCommand}" CommandParameter="{Binding ElementName=Digit0Button, Path=Content}"
+                Content="0" Style="{StaticResource StandardButton}"/>
+        <Button x:Name="DotButton" Grid.Row="6" Grid.Column="2"
+                Command="{Binding InsertDigitOrDotCommand}" CommandParameter="{Binding ElementName=DotButton, Path=Content}"
+                Content="." Style="{StaticResource StandardButton}"/>
+        <Button Grid.Row="6" Grid.Column="3"
+                Command="{Binding AddOperationCommand}"
+                Content="+" Style="{StaticResource NonDigitButton}"/>
     </Grid>
 </Window>
